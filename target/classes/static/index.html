@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>欢迎</title>
+  <style>
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial,
+        'Noto Sans', sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #e9f0ff 100%);
+    }
+    .card {
+      width: min(720px, 90vw);
+      padding: 2rem;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      text-align: center;
+    }
+    h1 { margin: 0 0 1rem; font-size: 2rem; }
+    p { color: #555; }
+    ul { text-align: left; display: inline-block; padding-left: 1em; }
+    li { margin: 0.25rem 0; }
+    a { color: #0b6bd3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>欢迎使用用户管理 API</h1>
+      <p>这是一个基于 Spring Boot 的简单演示应用，提供以下端点：</p>
+      <ul>
+        <li>GET /api/users</li>
+        <li>GET /api/users/{id}</li>
+        <li>POST /api/users</li>
+        <li>PUT /api/users/{id}</li>
+        <li>DELETE /api/users/{id}</li>
+      </ul>
+      <p>如需查看 API 文档，请访问后端提供的 Swagger UI（若已配置）或直接调用 API。</p>
+    </div>
+  </body>
+</html>

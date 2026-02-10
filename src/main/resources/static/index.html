@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>欢迎</title>
+  <title>用户角色管理系统</title>
   <style>
     html, body { height: 100%; }
     body {
@@ -11,37 +11,267 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
         Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial,
         'Noto Sans', sans-serif;
-      display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #f8fafc 0%, #e9f0ff 100%);
+      padding: 20px;
     }
+    .container { max-width: 1200px; margin: 0 auto; }
     .card {
-      width: min(720px, 90vw);
-      padding: 2rem;
-      border-radius: 12px;
       background: white;
+      border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,.08);
-      text-align: center;
+      margin-bottom: 20px;
+      overflow: hidden;
     }
-    h1 { margin: 0 0 1rem; font-size: 2rem; }
-    p { color: #555; }
-    ul { text-align: left; display: inline-block; padding-left: 1em; }
-    li { margin: 0.25rem 0; }
-    a { color: #0b6bd3; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .card-header {
+      background: linear-gradient(135deg, #0b6bd3 0%, #2563eb 100%);
+      color: white;
+      padding: 1.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .card-content { padding: 1.5rem; }
+    h1 { text-align: center; margin: 0 0 2rem; font-size: 2.5rem; color: #1e40af; }
+    .endpoint-group { margin-bottom: 1.5rem; }
+    .endpoint-group h3 { margin: 0 0 1rem; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+    .endpoint-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+    .endpoint {
+      background: #f8fafc;
+      border-left: 4px solid #0b6bd3;
+      padding: 1rem;
+      border-radius: 6px;
+    }
+    .method {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.875rem;
+      margin-right: 0.5rem;
+    }
+    .get { background: #dbeafe; color: #1e40af; }
+    .post { background: #dcfce7; color: #166534; }
+    .put { background: #fef3c7; color: #92400e; }
+    .delete { background: #fee2e2; color: #991b1b; }
+    .path { font-family: 'Courier New', monospace; font-weight: bold; }
+    .info-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+    .success-box {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+    .warning-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
   </style>
-  </head>
-  <body>
+</head>
+<body>
+  <div class="container">
+    <h1>用户角色管理系统</h1>
+    
     <div class="card">
-      <h1>欢迎使用用户管理 API</h1>
-      <p>这是一个基于 Spring Boot 的简单演示应用，提供以下端点：</p>
-      <ul>
-        <li>GET /api/users</li>
-        <li>GET /api/users/{id}</li>
-        <li>POST /api/users</li>
-        <li>PUT /api/users/{id}</li>
-        <li>DELETE /api/users/{id}</li>
-      </ul>
-      <p>如需查看 API 文档，请访问后端提供的 Swagger UI（若已配置）或直接调用 API。</p>
+      <div class="card-header">🔐 认证端点</div>
+      <div class="card-content">
+        <div class="info-box">
+          <strong>注意：</strong>认证端点不需要身份验证，其他所有端点都需要适当的角色权限。
+        </div>
+        <div class="endpoint-list">
+          <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/auth/login</span>
+            <p>用户登录，返回用户信息和角色</p>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/auth/me</span>
+            <p>获取当前登录用户信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/auth/logout</span>
+            <p>用户登出</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
+
+    <div class="card">
+      <div class="card-header">👥 用户管理端点</div>
+      <div class="card-content">
+        <div class="warning-box">
+          <strong>权限要求：</strong>需要 <code>ADMIN</code> 或 <code>USER</code> 角色
+        </div>
+        <div class="endpoint-list">
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users</span>
+            <p>获取所有用户列表</p>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users/{id}</span>
+            <p>根据ID获取用户信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users/{id}/roles</span>
+            <p>获取用户及其角色信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/users</span>
+            <p>创建新用户</p>
+          </div>
+          <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="path">/api/users/{id}</span>
+            <p>更新用户信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="path">/api/users/{id}</span>
+            <p>删除用户</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">🔑 用户角色关联端点</div>
+      <div class="card-content">
+        <div class="warning-box">
+          <strong>权限要求：</strong>需要 <code>ADMIN</code> 或 <code>USER</code> 角色
+        </div>
+        <div class="endpoint-list">
+          <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/users/{id}/roles</span>
+            <p>为用户添加角色（累加）</p>
+          </div>
+          <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="path">/api/users/{id}/roles</span>
+            <p>更新用户角色（替换）</p>
+          </div>
+          <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="path">/api/users/{id}/roles</span>
+            <p>移除用户的指定角色</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">🏷️ 角色管理端点</div>
+      <div class="card-content">
+        <div class="warning-box">
+          <strong>权限要求：</strong>需要 <code>ADMIN</code> 角色
+        </div>
+        <div class="endpoint-list">
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/roles</span>
+            <p>获取所有角色列表</p>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/roles/{id}</span>
+            <p>根据ID获取角色信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/roles/name/{name}</span>
+            <p>根据名称获取角色信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/roles</span>
+            <p>创建新角色</p>
+          </div>
+          <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="path">/api/roles/{id}</span>
+            <p>更新角色信息</p>
+          </div>
+          <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="path">/api/roles/{id}</span>
+            <p>删除角色</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">📝 使用示例</div>
+      <div class="card-content">
+        <div class="success-box">
+          <strong>默认管理员账户：</strong><br>
+          用户名：<code>admin</code><br>
+          密码：<code>admin123</code><br>
+          角色：<code>ADMIN</code> 和 <code>USER</code>
+        </div>
+        
+        <div class="info-box">
+          <strong>认证方式：</strong><br>
+          所有API使用HTTP Basic Authentication。在请求头中添加：<br>
+          <code>Authorization: Basic base64(username:password)</code>
+        </div>
+
+        <h4>创建用户示例：</h4>
+        <pre><code>POST /api/users
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "password123",
+  "enabled": true
+}</code></pre>
+
+        <h4>为用户分配角色示例：</h4>
+        <pre><code>POST /api/users/1/roles
+Content-Type: application/json
+
+{
+  "roleIds": [1, 2]
+}</code></pre>
+
+        <h4>登录示例：</h4>
+        <pre><code>POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">🛠️ 开发工具</div>
+      <div class="card-content">
+        <div class="endpoint-list">
+          <div class="endpoint">
+            <span class="method">-</span>
+            <a href="/h2-console" target="_blank">H2 数据库控制台</a>
+            <p>访问数据库，查看数据表和内容</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
